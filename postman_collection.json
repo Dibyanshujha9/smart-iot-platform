@@ -1,0 +1,253 @@
+{
+  "info": {
+    "name": "Curvvtech Backend",
+    "_postman_id": "curvvtech-backend-collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "health"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Auth - Signup",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/auth/signup",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "auth",
+            "signup"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"John Doe\", \"email\": \"john@example.com\", \"password\": \"SecurePass123\", \"role\": \"user\"}"
+        }
+      }
+    },
+    {
+      "name": "Auth - Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/auth/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\": \"john@example.com\", \"password\": \"SecurePass123\"}"
+        }
+      }
+    },
+    {
+      "name": "Devices - Create",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/devices",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "devices"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Living Room Light\", \"type\": \"light\", \"status\": \"active\"}"
+        }
+      }
+    },
+    {
+      "name": "Devices - List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/devices",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "devices"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Devices - Heartbeat",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/devices/:id/heartbeat",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "devices",
+            ":id",
+            "heartbeat"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"status\": \"active\"}"
+        }
+      }
+    },
+    {
+      "name": "Logs - Create",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/devices/:id/logs",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "devices",
+            ":id",
+            "logs"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"event\": \"units_consumed\", \"value\": 2.5}"
+        }
+      }
+    },
+    {
+      "name": "Logs - Last 10",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/devices/:id/logs?limit=10",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "devices",
+            ":id",
+            "logs"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "10"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Usage - 24h",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/devices/:id/usage?range=24h",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "devices",
+            ":id",
+            "usage"
+          ],
+          "query": [
+            {
+              "key": "range",
+              "value": "24h"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:4000"
+    }
+  ]
+}
