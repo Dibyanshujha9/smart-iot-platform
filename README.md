@@ -12,7 +12,7 @@ A **Smart Device Management Backend** with authentication, device CRUD, logs, us
 - **Rate Limiting** – `express-rate-limit` (100 req/min/user or IP)
 - **Background Jobs** – `node-cron` (auto-deactivate inactive devices > 24h)
 - **Docker & docker-compose** – Containerized setup
-- **Testing** – Minimal with `node:test` (Jest optional)
+- **Testing** – Minimal with postman 
 
 ---
 
