@@ -1,0 +1,561 @@
+{
+  "api_documentation": {
+    "endpoints": [
+      {
+        "✓": "endpoint_modified",
+        "name": "Signup Endpoint",
+        "description": "This endpoint allows new users to create an account by providing their basic information. It is an essential part of the authentication process, enabling users to register and gain access to the application.",
+        "method": "POST",
+        "url": "http://localhost:4000/auth/signup",
+        "request_body": {
+          "format": "JSON",
+          "parameters": [
+            {
+              "name": "name",
+              "type": "string",
+              "description": "The full name of the user. This is required for account creation."
+            },
+            {
+              "name": "email",
+              "type": "string",
+              "description": "The email address of the user. This must be unique and valid."
+            },
+            {
+              "name": "password",
+              "type": "string",
+              "description": "The password for the account. It should meet security requirements (e.g., minimum length)."
+            }
+          ],
+          "example": {
+            "name": "Your Name",
+            "email": "your.email@example.com",
+            "password": "your_secure_password"
+          }
+        },
+        "response": {
+          "structure": [
+            {
+              "name": "status",
+              "type": "string",
+              "description": "Indicates the success or failure of the signup process."
+            },
+            {
+              "name": "message",
+              "type": "string",
+              "description": "A descriptive message about the outcome of the request."
+            },
+            {
+              "name": "userId",
+              "type": "string",
+              "description": "The unique identifier for the newly created user account."
+            }
+          ],
+          "example": {
+            "status": "success",
+            "message": "User registered successfully.",
+            "userId": "unique_user_id"
+          }
+        },
+        "usage_notes": [
+          "Ensure that the email provided is not already in use to avoid conflicts.",
+          "Passwords should be stored securely and follow best practices for security.",
+          "Handle responses appropriately to inform users of the outcome of their signup request.",
+          "This endpoint is crucial for onboarding new users and should be used with care to ensure data integrity and security."
+        ]
+      },
+      {
+        "✓": "endpoint_modified",
+        "name": "Login Endpoint",
+        "description": "This endpoint is used to authenticate a user by logging them into the application.",
+        "method": "POST",
+        "url": "http://localhost:4000/auth/login",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "request_body": {
+          "format": "JSON",
+          "parameters": [
+            {
+              "name": "email",
+              "type": "string",
+              "description": "The email address of the user attempting to log in."
+            },
+            {
+              "name": "password",
+              "type": "string",
+              "description": "The password associated with the user's account."
+            }
+          ],
+          "example": {
+            "email": "victoria@example.com",
+            "password": "12345678"
+          }
+        },
+        "response": {
+          "description": "Upon successful authentication, the server will respond with a JSON object containing user-specific information and an authentication token. The exact structure of the response will depend on the implementation but generally includes:",
+          "structure": [
+            {
+              "name": "token",
+              "type": "string",
+              "description": "A token that can be used for subsequent authenticated requests."
+            },
+            {
+              "name": "user",
+              "type": "object",
+              "description": "An object containing user details, such as user ID and roles."
+            }
+          ],
+          "content_type": "application/json",
+          "status_codes": {
+            "200": "Authentication successful.",
+            "401": "Invalid credentials provided.",
+            "other": "Other error codes may be returned based on the server's error handling."
+          }
+        },
+        "notes": "Ensure to handle the responses appropriately in your application to provide feedback to the user."
+      },
+      {
+        "✓": "endpoint_modified",
+        "name": "Add Device",
+        "description": "This endpoint allows users to add a new device to the system. It accepts a JSON payload containing the details of the device to be added.",
+        "method": "POST",
+        "url": "http://localhost:4000/devices",
+        "request_body": {
+          "format": "JSON",
+          "parameters": [
+            {
+              "name": "name",
+              "type": "string",
+              "description": "The name of the device (e.g., \"Smart Remote\")."
+            },
+            {
+              "name": "type",
+              "type": "string",
+              "description": "The type of the device (e.g., \"Electronics\")."
+            },
+            {
+              "name": "status",
+              "type": "string",
+              "description": "The current status of the device (e.g., \"active\")."
+            }
+          ],
+          "example": {
+            "name": "Smart Remote",
+            "type": "Electronics",
+            "status": "active"
+          }
+        },
+        "response": {
+          "description": "Upon successful addition of the device, the server will respond with a confirmation message and the details of the newly created device. The response structure typically includes:",
+          "structure": [
+            {
+              "name": "id",
+              "type": "string",
+              "description": "Unique identifier for the device."
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "description": "The name of the device."
+            },
+            {
+              "name": "type",
+              "type": "string",
+              "description": "The type of the device."
+            },
+            {
+              "name": "status",
+              "type": "string",
+              "description": "The status of the device."
+            },
+            {
+              "name": "createdAt",
+              "type": "string",
+              "description": "Timestamp of when the device was created."
+            }
+          ],
+          "example": {
+            "id": "12345",
+            "name": "Smart Remote",
+            "type": "Electronics",
+            "status": "active",
+            "createdAt": "2023-10-01T12:00:00Z"
+          }
+        },
+        "notes": "Ensure that all required fields are provided in the request body to avoid errors."
+      },
+      {
+        "✓": "endpoint_modified",
+        "name": "Get Devices",
+        "description": "This endpoint retrieves a list of devices from the server. It is a simple HTTP GET request that does not require any parameters in the request body.",
+        "purpose": "This endpoint retrieves a list of devices from the server. It is useful for clients that need to display or manage devices within their application.",
+        "method": "GET",
+        "url": "http://localhost:4000/devices",
+        "headers": {
+          "Authorization": "Required. Include a valid token to authenticate the request.",
+          "Content-Type": "Should be set to application/json."
+        },
+        "expected_outcomes": "Upon successful execution, the server will respond with a JSON object containing an array of device objects. Each device object will typically include details such as device ID, name, type, and status.",
+        "response": {
+          "status_code": "200 OK - Indicates that the request was successful.",
+          "body": "A JSON array of device objects, each containing relevant device information.",
+          "structure": "On a successful request, the server will respond with a JSON object containing an array of devices. Each device object may include the following fields:",
+          "fields": [
+            {
+              "name": "id",
+              "description": "Unique identifier for the device."
+            },
+            {
+              "name": "name",
+              "description": "The name of the device."
+            },
+            {
+              "name": "type",
+              "description": "The type/category of the device."
+            },
+            {
+              "name": "status",
+              "description": "The current operational status of the device."
+            }
+          ],
+          "example": {
+            "devices": [
+              {
+                "id": "device1",
+                "name": "Device One",
+                "type": "Sensor",
+                "status": "active"
+              },
+              {
+                "id": "device2",
+                "name": "Device Two",
+                "type": "Camera",
+                "status": "inactive"
+              }
+            ]
+          }
+        },
+        "notes": [
+          "Ensure that the request is authenticated; otherwise, you will receive a 401 Unauthorized error.",
+          "The response will return a 200 OK status on success, or an appropriate error code if the request fails."
+        ]
+      },
+      {
+        "name": "Update Device Status",
+        "description": "This endpoint allows you to update the details of a specific device identified by its unique id. The request modifies the device's properties, such as its name and status.",
+        "method": "PATCH",
+        "url": "http://localhost:4000/devices/:id",
+        "headers": {
+          "Content-Type": "application/json (indicates that the request body format is JSON)"
+        },
+        "request_body": {
+          "format": "JSON",
+          "description": "The request body should be in JSON format and must include the following fields:",
+          "parameters": [
+            {
+              "name": "name",
+              "type": "string",
+              "description": "The new name of the device."
+            },
+            {
+              "name": "status",
+              "type": "string",
+              "description": "The new status of the device (e.g., \"active\" or \"inactive\")."
+            }
+          ],
+          "example": {
+            "name": "Smart Watch Ultra",
+            "status": "inactive"
+          }
+        },
+        "response": {
+          "description": "Upon a successful update, the server will respond with the updated device information. The structure of the response typically includes:",
+          "structure": [
+            {
+              "name": "id",
+              "type": "string",
+              "description": "The unique identifier of the device."
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "description": "The updated name of the device."
+            },
+            {
+              "name": "status",
+              "type": "string",
+              "description": "The updated status of the device."
+            },
+            {
+              "name": "updatedAt",
+              "type": "string",
+              "description": "Timestamp indicating when the device was last updated."
+            }
+          ],
+          "status_code": "200 OK if the update was successful"
+        },
+        "important_notes": [
+          "Ensure that the id in the URL corresponds to an existing device.",
+          "The request will fail if the required fields are missing or if the id is invalid."
+        ]
+      },
+      {
+        "name": "DELETE /devices/:id",
+        "description": "This endpoint is used to delete a specific device from the system based on its unique identifier.",
+        "method": "DELETE",
+        "url": "/devices/:id",
+        "request_parameters": [
+          {
+            "name": "id",
+            "type": "path parameter",
+            "description": "The unique identifier of the device that you wish to delete. This parameter is required and must be included in the URL."
+          }
+        ],
+        "expected_response": {
+          "description": "Upon a successful deletion, the API will respond with a status code indicating the outcome of the request. Typically, a successful deletion will return:",
+          "status_code": "204 No Content: This indicates that the device has been successfully deleted and there is no additional content to return."
+        },
+        "notes": [
+          "Ensure that the id provided corresponds to an existing device in the system. If the device does not exist, the API may return a 404 Not Found status.",
+          "This operation is irreversible; once a device is deleted, it cannot be recovered."
+        ]
+      },
+      {
+        "name": "Get device by ID",
+        "description": "This endpoint is used to update the details of a specific device identified by its unique id. The PATCH method allows partial updates to the device information.",
+        "method": "PATCH",
+        "url": "/devices/:id",
+        "request_body": {
+          "format": "application/x-www-form-urlencoded",
+          "description": "The request body must be sent in application/x-www-form-urlencoded format and should include the following parameters:",
+          "parameters": [
+            {
+              "name": "name",
+              "type": "text",
+              "description": "The name of the device."
+            },
+            {
+              "name": "type",
+              "type": "text",
+              "description": "The type of the device."
+            },
+            {
+              "name": "status",
+              "type": "text",
+              "description": "The current status of the device."
+            },
+            {
+              "name": "description",
+              "type": "text",
+              "description": "A detailed description of the device."
+            }
+          ]
+        },
+        "headers": {
+          "Content-Type": "Set this to application/x-www-form-urlencoded to indicate the format of the request body.",
+          "Authorization": "Include a valid token if authentication is required."
+        },
+        "response": {
+          "success": {
+            "status_code": "200 OK",
+            "description": "Upon a successful update, the server will respond with a status code of 200 OK and the response body will contain the updated device information, structured as follows:",
+            "structure": [
+              {
+                "name": "id",
+                "description": "The unique identifier of the device."
+              },
+              {
+                "name": "name",
+                "description": "The updated name of the device."
+              },
+              {
+                "name": "type",
+                "description": "The updated type of the device."
+              },
+              {
+                "name": "status",
+                "description": "The updated status of the device."
+              },
+              {
+                "name": "description",
+                "description": "The updated description of the device."
+              },
+              {
+                "name": "updatedAt",
+                "description": "Timestamp indicating when the device was last updated."
+              }
+            ]
+          },
+          "error": "In case of an error, the server will return an appropriate error status code along with a message detailing the issue encountered."
+        }
+      },
+      {
+        "name": "Heartbeat",
+        "description": "This endpoint is used to send a heartbeat signal for a specific device identified by its unique ID. The heartbeat signal typically indicates that the device is active and functioning properly.",
+        "method": "POST",
+        "url": "http://localhost:4000/devices/{deviceId}/heartbeat",
+        "url_note": "Replace {deviceId} with the unique identifier of the device (e.g., 68a5a06f0fad3e2b3eb17ee2).",
+        "request_body": {
+          "format": "JSON",
+          "description": "The request body must be in JSON format and should contain the following key:",
+          "parameters": [
+            {
+              "name": "status",
+              "type": "string",
+              "description": "Indicates the current status of the device. For example, \"active\"."
+            }
+          ],
+          "example": {
+            "status": "active"
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json - This header indicates that the request body format is JSON."
+        },
+        "response": {
+          "description": "The response from this endpoint will typically include a confirmation of the successful receipt of the heartbeat signal. The structure of the response may include:",
+          "structure": [
+            {
+              "name": "message",
+              "type": "string",
+              "description": "A confirmation message indicating that the heartbeat was received successfully."
+            },
+            {
+              "name": "deviceId",
+              "type": "string",
+              "description": "The ID of the device for which the heartbeat was sent."
+            },
+            {
+              "name": "timestamp",
+              "type": "string",
+              "description": "The time at which the heartbeat was received."
+            }
+          ],
+          "example": {
+            "message": "Heartbeat received successfully",
+            "deviceId": "68a5a06f0fad3e2b3eb17ee2",
+            "timestamp": "2023-10-01T12:00:00Z"
+          }
+        },
+        "notes": "Ensure that the request body is formatted correctly and that the necessary headers are included to avoid any issues with the request."
+      },
+      {
+        "name": "Endpoint Description for log-get",
+        "description": "This endpoint allows you to log device events by sending a POST request to the specified URL. The purpose of this request is to record specific actions or states of a device, such as powering on or off, along with relevant values.",
+        "method": "POST",
+        "url": "http://localhost:4000/devices/{deviceId}/logs",
+        "request_body": {
+          "format": "JSON",
+          "description": "The request body must be in JSON format and should include the following parameters:",
+          "parameters": [
+            {
+              "name": "event",
+              "type": "string",
+              "description": "The type of event being logged (e.g., \"power_on\", \"power_off\")."
+            },
+            {
+              "name": "value",
+              "type": "number",
+              "description": "A numeric value associated with the event, which may represent metrics like power consumption or status codes."
+            }
+          ],
+          "example": {
+            "event": "power_on",
+            "value": 120
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json - This header indicates that the request body is in JSON format."
+        },
+        "response": {
+          "description": "Upon successful logging of the event, the server will respond with a status code indicating the outcome of the request. The response may contain additional information about the logged event, such as a confirmation message or the logged data.",
+          "expected_status_code": "200 OK (for successful requests)",
+          "body": "A JSON object confirming the log entry, which may include details like the event type and the value logged.",
+          "example": {
+            "message": "Event logged successfully",
+            "event": "power_on",
+            "value": 120
+          }
+        },
+        "purpose": "This endpoint is essential for tracking device activity and can be used for monitoring and analytics purposes."
+      },
+      {
+        "name": "log-getLimit = x",
+        "title": "Get Device Logs",
+        "description": "This endpoint retrieves logs for a specific device, identified by its unique ID.",
+        "method": "GET",
+        "url": "http://localhost:4000/devices/{deviceId}/logs",
+        "parameters": {
+          "path_parameter": {
+            "name": "deviceId",
+            "type": "string",
+            "description": "The unique identifier of the device for which logs are being requested. In this example, it is 68a5a06f0fad3e2b3eb17ee2."
+          },
+          "query_parameter": {
+            "name": "limit",
+            "type": "integer",
+            "description": "The maximum number of log entries to return. In this example, it is set to 5."
+          }
+        },
+        "response": {
+          "description": "The expected response format is typically a JSON object containing an array of log entries corresponding to the specified device. Each log entry may include details such as timestamps, log levels, and messages."
+        },
+        "notes": "Ensure that the request is properly authenticated if required, and handle any potential errors that may arise during the retrieval of logs."
+      },
+      {
+        "name": "log-get-range=x h",
+        "description": "This endpoint retrieves the usage data for a specific device identified by its unique ID. The request is made to the /devices/{deviceId}/usage path, where {deviceId} is a placeholder for the actual device ID. The query parameter range specifies the time range for which the usage data is requested.",
+        "method": "GET",
+        "url": "http://localhost:4000/devices/{deviceId}/usage",
+        "query_parameters": [
+          {
+            "name": "range",
+            "type": "string",
+            "description": "This parameter defines the time range for the usage data. In this example, it is set to 24h, indicating that the usage data for the last 24 hours is requested."
+          }
+        ],
+        "response": {
+          "description": "The response will contain the usage data for the specified device within the given time range. The structure of the response typically includes:",
+          "structure": [
+            {
+              "name": "deviceId",
+              "type": "string",
+              "description": "The unique identifier of the device."
+            },
+            {
+              "name": "usageData",
+              "type": "array",
+              "description": "An array of objects, each representing usage metrics such as:",
+              "sub_structure": [
+                {
+                  "name": "timestamp",
+                  "type": "string",
+                  "description": "The time at which the usage data was recorded."
+                },
+                {
+                  "name": "value",
+                  "type": "number",
+                  "description": "The usage value at the corresponding timestamp."
+                }
+              ]
+            }
+          ],
+          "example": {
+            "deviceId": "68a5a06f0fad3e2b3eb17ee2",
+            "usageData": [
+              {
+                "timestamp": "2023-10-01T12:00:00Z",
+                "value": 150
+              },
+              {
+                "timestamp": "2023-10-01T13:00:00Z",
+                "value": 200
+              }
+            ]
+          }
+        },
+        "purpose": "This endpoint is useful for monitoring device performance and analyzing usage patterns over time."
+      }
+    ]
+  }
+}
